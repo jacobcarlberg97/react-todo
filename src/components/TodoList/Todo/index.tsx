@@ -17,14 +17,24 @@ const TodoItem: React.FC<TodoProps> = ({ todo }: TodoProps) => {
     return await api.deleteTodo(todo);
   };
 
+  const updateTodo = async () => {
+    todo.completed = !todo.completed
+    return await api.updateTodo(todo);
+  }
+
+  const style = {
+    textDecoration: "line-through"
+  }
+
   const { mutate: mutateRemoveTodo } = useMutation(removeTodo, useCreateSideEffect());
+  const { mutate: mutateUpdateTodo } = useMutation(updateTodo, useCreateSideEffect());
 
   return (
     <InputGroup className="mb-3">
-      <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-      <Form.Control read-only="true" value={todo.todo} aria-label="Todo item with checkbox" />
-      <Button onClick={() => mutateRemoveTodo()}>-</Button>
-    </InputGroup>
+      <InputGroup.Checkbox onChange={mutateUpdateTodo} checked={todo.completed} aria-label="Checkbox for following text input" />
+      <Form.Control style={todo.completed ? style : {}} read-only="true" value={todo.todo} aria-label="Todo item with checkbox" />
+      <Button variant="danger" onClick={() => mutateRemoveTodo()}>-</Button>
+    </InputGroup> 
   );
 };
 

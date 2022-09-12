@@ -1,5 +1,5 @@
 export interface Todo {
     todo: string,
     completed: boolean,
-    _vid: number
+    _id: number
 }

@@ -7,29 +7,31 @@ import { useQuery } from "react-query";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { QUERY_KEY_GET_TODOS } from "./constants";
+import { useStore } from "./store";
 
 function App() {
   const fetchTodos = async () => {
     const res = await api.getTodos();
     return res.json();
-  }
-  
-  const { isLoading, isError, data } = useQuery(QUERY_KEY_GET_TODOS, fetchTodos);
-  
+  };
 
-  if(isLoading) {
-    return <div>Loading...</div>
+  const { setTodos } = useStore();
+
+  const { isLoading, isError } = useQuery(QUERY_KEY_GET_TODOS, fetchTodos, { onSuccess: (data) => setTodos(data)});
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   if (isError) {
-    return <div>Error.</div>
+    return <div>Error.</div>;
   }
   return (
     <div className="App">
-      <Navbar todos={data} />
+      <Navbar />
       <div className="d-flex align-items-center justify-content-center flex-column vh-100 vw-100">
-      <CreateTodo />
-      <TodoList todos={data} />
+        <CreateTodo />
+        <TodoList />
       </div>
     </div>
   );

@@ -26,4 +26,12 @@ export default {
       headers: { "Content-Type": "application/json" },
     })
   },
+  updateTodo(todo: Todo) {
+    return fetch("http://localhost:5000/api/todo/updateTodo", {
+      method: "PUT",
+      mode: "cors",
+      body: JSON.stringify({todo}),
+      headers: { "Content-Type": "application/json" },
+    })
+  },
 };
