@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import formatDate from "../../hooks";
+import useFormatDate from "../../hooks";
 import { useStore } from "../../store";
 
 const Navbar: React.FC = () => {
@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
 
     return (
         <div className="bg-success w-100 p-3 text-white text-center">
-            <h6>{formatDate(new Date())}</h6>
+            <h6>{useFormatDate(new Date())}</h6>
             {completedTodosPercentage?.toFixed(2)}% completed
         </div>
     )
