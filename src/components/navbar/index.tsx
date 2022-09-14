@@ -1,23 +1,26 @@
-import React, {useMemo} from "react";
-import useFormatDate from "../../hooks";
+import React, { useMemo } from "react";
+import useToggle from "../../hooks";
 import { useStore } from "../../store";
 
 const Navbar: React.FC = () => {
-    const { todos } = useStore();
-    const completedTodosPercentage = useMemo(() => {
-        if (todos.length) {
-        const completedTodos = todos.filter((todo) => todo.completed)
+  const { todos } = useStore();
+  const [value, toggleValue] = useToggle(false);
+  const completedTodos = todos.filter((todo) => todo.completed);
+  const completedTodosPercentage = useMemo(() => {
+    if (todos.length) {
+      return (completedTodos.length / todos.length) * 100;
+    }
+  }, [todos]);
 
-        return (completedTodos.length / todos.length) * 100;
-        }
-    }, [todos]) 
+  return (
+    <div className="bg-success w-100 p-3 text-white text-center">
+      {value ? completedTodosPercentage?.toFixed(2) + "% " : completedTodos.length + " / " + todos.length + " "}
+      completed
+      <button className="ms-3" onClick={toggleValue}>
+        Toggle
+      </button>
+    </div>
+  );
+};
 
-    return (
-        <div className="bg-success w-100 p-3 text-white text-center">
-            <h6>{useFormatDate(new Date())}</h6>
-            {completedTodosPercentage?.toFixed(2)}% completed
-        </div>
-    )
-}
-
-export default Navbar
+export default Navbar;

@@ -6,16 +6,14 @@ export const useCreateSideEffect = (): any => {
 
   return {
     onMutate: () => {
-      console.log("onMutate");
     },
     onSuccess: (data: any, variables: any, context: any) => {
       queryClient.invalidateQueries(QUERY_KEY_GET_TODOS);
-      console.log("data:", data)
       queryClient.setQueryData(["todos", {id: variables._id}], data)
+
     },
     onSettled: (data: any) => {
       console.log("onSettled");
     },
   };
 };
-

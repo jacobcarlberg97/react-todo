@@ -14,7 +14,7 @@ function App() {
     const res = await api.getTodos();
     return res.json();
   };
-
+ 
   const { setTodos } = useStore();
 
   const { isLoading, isError } = useQuery(QUERY_KEY_GET_TODOS, fetchTodos, { onSuccess: (data) => setTodos(data)});
